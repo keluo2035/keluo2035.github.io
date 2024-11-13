@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniJournal 期刊管理系统</title>
+</head>
+<body>
+    <h1>欢迎来到 MiniJournal 期刊管理系统</h1>
+    <p>请选择操作：</p>
+    <a href="/login">登录</a> | <a href="/register">注册</a>
+</body>
+</html>

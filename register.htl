@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+    <h2>注册</h2>
+    <form action="/register" method="POST">
+        <label>用户名: <input type="text" name="username" required></label><br>
+        <label>密码: <input type="password" name="password" required></label><br>
+        <label>认证密码 (仅限用户注册): <input type="password" name="authCode"></label><br>
+        <label>角色:
+            <select name="role">
+                <option value="user">用户</option>
+                <option value="admin">管理员</option>
+            </select>
+        </label><br>
+        <input type="submit" value="注册">
+    </form>
+</body>
+</html>
