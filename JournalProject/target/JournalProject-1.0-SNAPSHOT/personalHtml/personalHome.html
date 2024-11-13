@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>用户主页</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<script>
+    //动态获取用户名
+    $(document).ready(function() {
+        // 页面加载完成后发送ajax请求
+        $.ajax({
+            type: "GET",
+            url: "/users/findCurUser",
+            success: function(response) {
+                if (response.success) {
+                    var userObject = response.data; // 用户信息对象
+                    var nicknameElement = document.getElementById('username'); // 获取元素
+                    if (nicknameElement) {
+                        nicknameElement.textContent = "欢迎用户 " + userObject.nickName; // 更新元素内容
+                    }
+                } else {
+                    console("Failed to load user information: " + response.message);
+                }
+            },
+            error: function(error) {
+                console("Error: " + error.statusText);
+            }
+        });
+    });
+
+
+    $(document).ready(function() {
+        // 页面加载完成后发送ajax请求
+        $.ajax({
+            type: "GET",
+            url: "/users/findByUserid",
+            success: function(response) {
+                if (response.success) {
+                    var articles = response.data;
+                    var postsContainer = $("#posts");
+                    postsContainer.empty(); // 清空容器
+
+                    articles.forEach(function(article) {
+                        var stateText;
+                        switch (article.state) {
+                            case 1:
+                                stateText = "审核阶段";
+                                break;
+                            case 2:
+                                stateText = "退回";
+                                break;
+                            case 3:
+                                stateText = "通过";
+                                break;
+                            default:
+                                stateText = "未知状态";
+                        }
+
+                        var articleElement = `
+              <article>
+                <h3>${article.title}</h3>
+                <p>${article.keywords}</p>
+                <p>作品状态: ${stateText}</p>
+                <ul class="actions">
+                  <li><a href="http://localhost:8080/page/journalShow.html?articleID=${article.articleID}" class="button">More</a>
+</li>
+                </ul>
+              </article>
+            `;
+                        postsContainer.append(articleElement);
+                    });
+                } else {
+                    alert("Failed to load articles: " + response.message);
+                }
+            },
+            error: function(error) {
+                alert("Error: " + error.statusText);
+            }
+        });
+    });
+</script>
+
+
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <header id="header">
+                <a href="../page/index.html" class="logo"><strong>期刊投稿</strong>管理系统</a>
+                <ul class="icons">
+                    <li><a href="../personalHtml/personalHome.html" class="icon brands fa-medium-m" data-tooltip="个人主页"><span class="label">Medium</span></a></li>
+                </ul>
+            </header>
+            <section>
+                <header class="major">
+                    <h2>我的投稿</h2>
+                </header>
+                <div class="posts" ID="posts">
+<!--                    <article>-->
+<!--                        <h3>{$作品名}</h3>-->
+<!--                        <p>{$关键字}</p>-->
+<!--                        <p>作品状态</p>-->
+<!--                        <ul class="actions">-->
+<!--                            <li><a href="#" class="button">More</a></li>-->
+<!--                        </ul>-->
+<!--                    </article>-->
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="inner">
+
+
+            <!-- Menu -->
+            <nav id="menu">
+                <header class="major">
+                    <h2>个人主页</h2>
+                </header>
+                <ul>
+                    <li id="username">欢迎用户xxx</li>
+                    <br>
+                    <li><a href="personalHome.html">我的投稿</a></li>
+                    <li><a href="../page/submit.html">期刊投稿</a></li>
+                    <li><a href="../page/selectJournal.html">期刊查找</a></li>
+                    <li><a href="personalSetting.html">个人信息设置</a></li>
+                    <li><a href="../page/checkJournal.html" >期刊审核</a></li>
+                    <li><a href="/users/exitlogin" >退出登录</a></li>
+                </ul>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+            </nav>
+            <!-- Footer -->
+            <footer id="footer">
+                <p class="copyright">版权及最终解释权所有&copy;本站制作组</p>
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/browser.min.js"></script>
+<script src="../assets/js/breakpoints.min.js"></script>
+<script src="../assets/js/util.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="upload.js"></script>
+<script src="../assets/js/login.js"></script>
+
+</body>
+</html>

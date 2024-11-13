@@ -1,3 +1,0 @@
-admin01 pass1234
-admin02 pass5678
-admin03 pass91011
